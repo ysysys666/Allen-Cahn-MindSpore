@@ -45,5 +45,5 @@ test_dataset_path: "./dataset"
 load_ckpt: true
 save_ckpt: true
 save_ckpt_path: "./ckpt"
-load_ckpt_path: "/path/to/ckpt"
+load_ckpt_path: "./ckpt/ac-15001.ckpt"
 visual_resolution: 100
