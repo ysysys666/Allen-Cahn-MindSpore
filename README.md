@@ -75,4 +75,4 @@ python test.py
 要验证的checkpoint需要在config_file中指定，本实验默认是最后的[checkpoint](./ckpt/ac-15001.ckpt)，结果默认保存在images文件夹
 
 ### 结果展示
-
+![result](./images/15001-result.jpg)
