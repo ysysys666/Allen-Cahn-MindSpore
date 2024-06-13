@@ -6,14 +6,21 @@
 
 近年来，在经典理论和具有计算机性能的数值方法发展趋于平稳的同时，机器学习方法将大量数据与神经网络相结合，实现了流场的快速模拟。这些方法可以获得接近传统方法的精度，为流场求解提供了新的思路。
 
-Allen-Cahn方程（以John W.Cahn和Sam Allen命名）是数学物理的反应扩散方程，描述了多组分合金系统中的相分离过程，包括有序-无序转变。该方程描述了域$`\Omega`$上标量值状态变量$`\eta`$在时间间隔$`T`$内的时间演化。本实验中，MindFLow流体模拟套件用于基于物理驱动的PINNs（Physics INformed Neural Networks）方法求解Allen Cahn方程。
+本实验基于MindSpore，利用MindFLow流体模拟套件并基于物理驱动的PINNs方法求解Allen Cahn方程。
 
 ## 问题描述
 
+Allen-Cahn方程（以John W.Cahn和Sam Allen命名）是数学物理的反应扩散方程，描述了多组分合金系统中的相分离过程，包括有序-无序转变。该方程描述了域$`\Omega`$上标量值状态变量$`\eta`$在时间间隔$`T`$内的时间演化。
 Allen Cahn方程的形式如下：
 ```math
 \frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} + 5(u - u^3), x\in [-1, 1], t \in [0, 1]
 ```
+其中，$`u`$表示相分数，$`x`$是空间变量，$`t`$是时间变量。
+
+物理信息神经网络（Physics-Informed Neural Networks，简称PINNs）是一种结合了深度学习和物理学原理的神经网络模型，主要用于求解偏微分方程。PINNs的核心思想是在神经网络的损失函数中加入一个项，该项表示网络输出与物理方程的偏差。这样做可以使网络不仅能够拟合数据，还能满足物理定律。具体来说，PINNs通常由以下几部分组成：
+- 数据拟合项：确保网络输出与观测数据相匹配。
+- 物理约束项：确保网络输出符合相关的物理方程。
+
 本实验使用狄利克雷边界条件和初始条件，形式如下
 ```math
 \begin{aligned}
@@ -21,7 +28,7 @@ u(-1, t)&=u(1, t)=-1 \\
 u(x, 0)&=x^2cos(\pi x)
 \end{aligned}
 ```
-本实验利用PINNs方法学习位置和时间到相应物理量的映射(x,t)$`\to$u(𝑥,𝑡)`$\to`$𝑢，实现Allen Cahn方程的求解。
+本实验利用PINNs方法学习位置和时间到相应物理量的映射(x,t)$`\to`$u(𝑥,𝑡)$`\to`$𝑢，实现Allen Cahn方程的求解。
 
 ## 快速开始
 
@@ -36,7 +43,7 @@ u(x, 0)&=x^2cos(\pi x)
 本实验使用的是mindspore==2.0.0rc1，mindflow==0.1.0rc1
 
 - 可参考[MindSpore](https://www.mindspore.cn/install)快速安装
-- 可下载[mindspore.whl](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/x86_64/mindspore-2.0.0rc1-cp39-cp39-linux_x86_64.whl)、[mindflow.whi](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindScience/gpu/x86_64/cuda-11.1/mindflow_gpu-0.1.0rc1-py3-none-any.whl)之后使用pip安装
+- 可下载[mindspore.whl](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/x86_64/mindspore-2.0.0rc1-cp39-cp39-linux_x86_64.whl)、[mindflow.whl](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindScience/gpu/x86_64/cuda-11.1/mindflow_gpu-0.1.0rc1-py3-none-any.whl)之后使用pip安装
 
 ### 代码准备
 
@@ -64,7 +71,7 @@ python train.py --mode GRAPH --device_target GPU --device_id 0 --config_file_pat
 
 ### 训练方式二
 
-可以使用Jupyter Notebook逐行运行训练和验证代码。
+可以使用[Jupyter Notebook](./allen_cahn_CN.ipynb)逐行运行训练和验证代码。
 
 ### 验证
 
