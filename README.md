@@ -55,7 +55,8 @@ git clone https://github.com/ysysys666/Allen-Cahn-MindSpore.git
 
 从[dataset](https://download-mindspore.osinfra.cn/mindscience/mindflow/dataset/applications/research/allen_cahn/) 中下载验证所需要的数据集，并保存在`./dataset`目录下。
 
-### 训练方式一
+### 训练
+#### 训练方式一
 
 ```
 python train.py --mode GRAPH --device_target GPU --device_id 0 --config_file_path ./configs/allen_cahn_cfg.yaml
@@ -69,7 +70,7 @@ python train.py --mode GRAPH --device_target GPU --device_id 0 --config_file_pat
 
 `--config_file_path`表示参数文件的路径，默认值'./configs/allen_cahn_cfg.yaml'；
 
-### 训练方式二
+#### 训练方式二
 
 可以使用[Jupyter Notebook](./allen_cahn_CN.ipynb)逐行运行训练和验证代码。
 
@@ -79,7 +80,18 @@ python train.py --mode GRAPH --device_target GPU --device_id 0 --config_file_pat
 python test.py
 ```
 
-要验证的checkpoint需要在config_file中指定，本实验默认是最后的[checkpoint](./ckpt/ac-15001.ckpt)，结果默认保存在images文件夹
+要验证的checkpoint需要在config_file中指定，本实验默认是[最后的checkpoint](./ckpt/ac-15001.ckpt)，结果默认保存在images文件夹
 
 ### 结果展示
 ![result](./images/15001-result.jpg)
+#### 时空图解释
+时空图位于顶部，横轴表示时间 $`t`$ 从 0 到 1，纵轴表示空间变量 $`x`$ 从 -1 到 1。颜色表示函数 $`u(x,t)`$ 的值，颜色条显示了函数值从 -1（紫色）到 1（红色）的变化。
+
+在这个时空图中，初始状态 $`t=0`$ 时，解的空间分布开始从 $`u(x,0)=x^2cos⁡(\pi x)`$ 这一较为复杂的形态发展，随后解逐渐演化，尝试达到一个更稳定的状态。
+#### 时间剖面图解释
+下方三个图展示了 $`t=0.25, 0.5, 0.75`$ 时刻 $`u(x,t)`$ 的空间分布：
+- $`t=0.25`$ 图：解的波动开始减少，但仍然保持较为复杂的结构。这显示了解正在响应方程的非线性动力学。
+- $`t=0.5`$ 图：此时的解更加集中和尖锐，两个峰值开始显现，这可能是向两个稳定状态（即 $`u=±1`$ ）的过渡。
+- $`t=0.75`$ 图：解的波动进一步减少，接近两个清晰的稳定状态，显示为两个尖锐的峰值。
+
+
